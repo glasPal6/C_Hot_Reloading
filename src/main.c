@@ -1,8 +1,18 @@
 #include <stdio.h>
 
+#include "raylib.h"
+
 int main(void)
 {
-    printf("Hello World!\n");
+    InitWindow(800, 600, "Hot Reloading");
+
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        EndDrawing();
+    }
+
+    CloseWindow();
 
     return 0;
 }
