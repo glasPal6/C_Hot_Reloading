@@ -21,35 +21,14 @@ bool reload_libplug()
         return false;
     }
 
-    plug_init = dlsym(libplug, "plug_init");
-    if (plug_init == NULL) {
-        TraceLog(LOG_ERROR, "%s\n", dlerror());
-        return false;
-    }
-
-    plug_destroy = dlsym(libplug, "plug_destroy");
-    if (plug_destroy == NULL) {
-        TraceLog(LOG_ERROR, "%s\n", dlerror());
-        return false;
-    }
-
-    plug_pre_reload = dlsym(libplug, "plug_pre_reload");
-    if (plug_pre_reload == NULL) {
-        TraceLog(LOG_ERROR, "%s\n", dlerror());
-        return false;
-    }
-
-    plug_post_reload = dlsym(libplug, "plug_post_reload");
-    if (plug_post_reload == NULL) {
-        TraceLog(LOG_ERROR, "%s\n", dlerror());
-        return false;
-    }
-
-    plug_update = dlsym(libplug, "plug_update");
-    if (plug_update == NULL) {
-        TraceLog(LOG_ERROR, "%s\n", dlerror());
-        return false;
-    }
+    #define PLUG(func, ...) \
+        func = dlsym(libplug, #func); \
+        if (func == NULL) { \
+            TraceLog(LOG_ERROR, "%s\n", dlerror()); \
+            return false; \
+        }
+    LIST_OF_PLUGS
+    #undef PLUG
 
     return true;
 }
