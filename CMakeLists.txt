@@ -39,6 +39,12 @@ PRIVATE
 #----------------------------------------------
 add_executable(${BUILD_NAME}
     src/main.c
+    src/hotreload.c
+)
+
+target_compile_definitions(${BUILD_NAME}
+PRIVATE
+    # HOTRELOAD
 )
 
 target_include_directories(${BUILD_NAME}
