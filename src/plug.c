@@ -43,7 +43,7 @@ void plug_update(void)
     BeginDrawing();
 
     ClearBackground(p->background);
-    DrawText("Hello, World!", 100, 100, 20, WHITE);
+    // DrawText("Hello, World!", 100, 100, 20, WHITE);
     
     EndDrawing();
 }
