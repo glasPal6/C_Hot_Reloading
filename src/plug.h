@@ -1,6 +1,8 @@
 #ifndef PLUG_H
 #define PLUG_H
 
+#include <stddef.h>
+
 void (*plug_init)(void) = NULL;
 void (*plug_destroy)(void) = NULL;
 void *(*plug_pre_reload)(void) = NULL;
