@@ -6,6 +6,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(PLUG_NAME plug)
 set(BUILD_NAME main)
 
+option(HOTRELOAD_ENABLE "Enable hot reloading" ON)
+
 #----------------------------------------------
 # Plug build
 #----------------------------------------------
@@ -34,15 +36,21 @@ PRIVATE
 #----------------------------------------------
 # Main build
 #----------------------------------------------
-add_executable(${BUILD_NAME}
-    src/main.c
-    src/hotreload.c
-)
+if (HOTRELOAD_ENABLE)
+    add_executable(${BUILD_NAME}
+        src/main.c
+        src/hotreload.c
+    )
 
-target_compile_definitions(${BUILD_NAME}
-PRIVATE
-    HOTRELOAD
-)
+    target_compile_definitions(${BUILD_NAME}
+    PRIVATE
+        HOTRELOAD
+    )
+else()
+    add_executable(${BUILD_NAME}
+        src/main.c
+    )
+endif()
 
 target_include_directories(${BUILD_NAME}
 PRIVATE
