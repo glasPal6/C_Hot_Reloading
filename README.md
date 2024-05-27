@@ -16,7 +16,6 @@ cd build
 cmake -DHOTRELOAD_ENABLE=ON ..
 make
 ./main
-
 ```
 The option to enable or disable hot reloading is done by passind```-DHOTRELOAD_ENABLE``` flag to the CMake file. 
 
