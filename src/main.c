@@ -6,6 +6,7 @@
 #include "hotreload.h"
 
 int main(void)
+
 {
     if (!reload_libplug()) return 1;
 

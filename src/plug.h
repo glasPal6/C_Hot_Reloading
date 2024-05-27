@@ -10,7 +10,7 @@
     PLUG(plug_post_reload, void, void *state) \
     PLUG(plug_update, void, void)
 
-#define PLUG(name, ret, ...) typedef ret (name##_t) (__VA_ARGS__);
+#define PLUG(func, ret, ...) typedef ret (func##_t)(__VA_ARGS__);
 LIST_OF_PLUGS
 #undef PLUG
 

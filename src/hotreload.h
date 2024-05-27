@@ -5,16 +5,18 @@
 
 #include "plug.h"
 
-#ifdef HOTRELOAD
-    #define PLUG(name, ...) extern name##_t *name;
+#ifdef HOTRELOAD 
+    #define PLUG(func, ...) extern func##_t *func;
     LIST_OF_PLUGS
     #undef PLUG
-    bool reload_libplug();
+    bool reload_libplug(void);
 #else
-    #define PLUG(name, ...) name##_t name;
+    #define PLUG(func, ...) func##_t func;
     LIST_OF_PLUGS
     #undef PLUG
     #define reload_libplug() true
-#endif // HOTRELOAD
+#endif /* ifdef  */
 
-#endif  // HOTRELOAD_H
+
+#endif /* ifndef HOTRELOAD_H */
+

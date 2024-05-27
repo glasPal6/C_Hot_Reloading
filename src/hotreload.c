@@ -8,11 +8,12 @@
 const char *libplug_path = "libplug.so";
 void *libplug = NULL;
 
-#define PLUG(name, ...) name##_t *name = NULL;
+#define PLUG(func, ...) func##_t *func = NULL;
 LIST_OF_PLUGS
 #undef PLUG
 
-bool reload_libplug()
+bool reload_libplug(void)
+
 {
     if (libplug != NULL) {
         dlclose(libplug);

@@ -13,17 +13,19 @@ To initially run `main`, run the following command:
 ```
 mkdir build
 cd build
-cmake ..
+cmake -DHOTRELOAD_ENABLE=ON ..
 make
 ./main
 
 ```
-Once ```main``` is runnig, you can change ```plug``` and then run:
+The option to enable or disable hot reloading is done by passind```-DHOTRELOAD_ENABLE``` flag to the CMake file. 
+
+Once ```main``` is runnig, you can change ```plug.c``` and then run:
 
 ```
 make plug
 ```
-And reload the plug in main. In this case it is by pressing the R key.
+which will reload the plugin into the main executable that is running. In this case, ```plug.c``` is reloaded by pressing the R key in the main executable.
 
 # Basic background theory
 
