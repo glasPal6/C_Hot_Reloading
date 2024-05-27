@@ -1,6 +1,5 @@
 #include <stddef.h>
 #include <dlfcn.h>
-#include <stdio.h>
 #include <stdbool.h>
 
 #include "raylib.h"
@@ -14,6 +13,7 @@ LIST_OF_PLUGS
 #undef PLUG
 
 bool reload_libplug(void)
+
 {
     if (libplug != NULL) {
         dlclose(libplug);
