@@ -6,10 +6,15 @@
 #include "raylib.h"
 #include "plug.h"
 
+#ifdef HOTRELOAD 
+#define PLUG(func, ...) extern func##_t *func;
+LIST_OF_PLUGS
+#undef PLUG
+
 const char *libplug_path = "libplug.so";
 void *libplug = NULL;
 
-bool reload_libplug()
+bool reload_libplug(void)
 {
     if (libplug != NULL) {
         dlclose(libplug);
@@ -32,6 +37,17 @@ bool reload_libplug()
 
     return true;
 }
+
+#define PLUG(func, ...) func##_t *func = NULL;
+LIST_OF_PLUGS
+#undef PLUG
+
+#else
+#define PLUG(func, ...) func##_t func;
+LIST_OF_PLUGS
+#undef PLUG
+#define reload_libplug() true
+#endif /* ifdef  */
 
 int main(void)
 {

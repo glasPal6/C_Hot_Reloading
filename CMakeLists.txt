@@ -41,6 +41,11 @@ add_executable(${BUILD_NAME}
     src/main.c
 )
 
+target_compile_definitions(${BUILD_NAME}
+PRIVATE
+    HOTRELOAD
+)
+
 target_include_directories(${BUILD_NAME}
 PRIVATE
     raylib/include
