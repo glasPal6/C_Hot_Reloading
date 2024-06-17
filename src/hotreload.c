@@ -1,9 +1,8 @@
-#include <stddef.h>
 #include <dlfcn.h>
 #include <stdbool.h>
 
-#include "raylib.h"
 #include "plug.h"
+#include "raylib.h"
 
 const char *libplug_path = "libplug.so";
 void *libplug = NULL;
@@ -12,9 +11,7 @@ void *libplug = NULL;
 LIST_OF_PLUGS
 #undef PLUG
 
-bool reload_libplug(void)
-
-{
+bool reload_libplug(void) {
     if (libplug != NULL) {
         dlclose(libplug);
     }
@@ -25,14 +22,22 @@ bool reload_libplug(void)
         return false;
     }
 
-    #define PLUG(func, ...) \
-        func = dlsym(libplug, #func); \
-        if (func == NULL) { \
-            TraceLog(LOG_ERROR, "%s\n", dlerror()); \
-            return false; \
-        }
+#define PLUG(func, ...)                                                        \
+    func = dlsym(libplug, #func);                                              \
+    if (func == NULL) {                                                        \
+        TraceLog(LOG_ERROR, "%s\n", dlerror());                                \
+        return false;                                                          \
+    }
     LIST_OF_PLUGS
-    #undef PLUG
+#undef PLUG
 
+    return true;
+}
+
+bool unload_libplug(void) {
+    if (libplug != NULL) {
+        dlclose(libplug);
+        libplug = NULL;
+    }
     return true;
 }

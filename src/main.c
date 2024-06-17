@@ -1,14 +1,14 @@
-#include <stddef.h>
 #include <dlfcn.h>
 #include <stdbool.h>
 
-#include "raylib.h"
 #include "hotreload.h"
+#include "raylib.h"
 
 int main(void)
 
 {
-    if (!reload_libplug()) return 1;
+    if (!reload_libplug())
+        return 1;
 
     plug_init();
     InitWindow(800, 600, "Hot Reloading");
@@ -24,6 +24,9 @@ int main(void)
 
     CloseWindow();
     plug_destroy();
+
+    if (!unload_libplug())
+        return 1;
 
     return 0;
 }
