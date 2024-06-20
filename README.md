@@ -4,7 +4,9 @@ Hot Reloading is useful in projects where quick iteration is required, such as i
 
 The purpose of this is to build a basic Hot Reloading example with raylib.
 
-The macros are taken from [Musializer](https://github.com/tsoding/musializer)
+The macros are taken from [Musializer](https://github.com/tsoding/musializer).
+
+Chechout [Hot Reloading in Zig](https://github.com/glasPal6/Zig_Hot_Reloading) for a zig version.
 
 ## Build
 
