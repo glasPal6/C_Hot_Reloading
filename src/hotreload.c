@@ -11,9 +11,17 @@ void *libplug = NULL;
 LIST_OF_PLUGS
 #undef PLUG
 
-bool reload_libplug(void) {
+bool unload_libplug(void) {
     if (libplug != NULL) {
         dlclose(libplug);
+        libplug = NULL;
+    }
+    return true;
+}
+
+bool reload_libplug(void) {
+    if (!unload_libplug()) {
+        return false;
     }
 
     libplug = dlopen(libplug_path, RTLD_NOW);
@@ -31,13 +39,5 @@ bool reload_libplug(void) {
     LIST_OF_PLUGS
 #undef PLUG
 
-    return true;
-}
-
-bool unload_libplug(void) {
-    if (libplug != NULL) {
-        dlclose(libplug);
-        libplug = NULL;
-    }
     return true;
 }
