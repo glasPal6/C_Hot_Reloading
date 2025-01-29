@@ -1,6 +1,7 @@
 #include <dlfcn.h>
 #include <stdbool.h>
 
+/*#define HOTRELOAD_IMPLEMENTATION*/
 #include "hotreload.h"
 #include "raylib.h"
 
