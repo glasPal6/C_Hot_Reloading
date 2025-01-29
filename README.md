@@ -2,16 +2,13 @@
 
 Hot Reloading is useful in projects where quick iteration is required, such as in game dev where you want to quickly see the outcome of your changes without having to recompile everything.
 
-The purpose of this is to build a basic Hot Reloading example with raylib.
-
-The macros are taken from [Musializer](https://github.com/tsoding/musializer).
+The purpose of this is to build a basic Hot Reloading example with raylib, but it can be used in any project, it is just easier to see the changed with a GUI.
 
 Chechout [Hot Reloading in Zig](https://github.com/glasPal6/Zig_Hot_Reloading) for a zig version.
 
 ## Build
 
 To initially run `main`, run the following command:
-
 ```
 mkdir build
 cd build
@@ -22,11 +19,10 @@ make
 The option to enable or disable hot reloading is done by passind```-DHOTRELOAD_ENABLE``` flag to the CMake file. 
 
 Once ```main``` is runnig, you can change ```plug.c``` and then run:
-
 ```
 make plug
 ```
-which will reload the plugin into the main executable that is running. In this case, ```plug.c``` is reloaded by pressing the R key in the main executable.
+which will reload the plugin into the main executable that is running. In this case, ```libplug``` is reloaded by pressing the R key in the main executable.
 
 # Basic background theory
 
