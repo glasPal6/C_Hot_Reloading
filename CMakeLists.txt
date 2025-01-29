@@ -25,10 +25,10 @@ target_link_libraries(${PLUG_NAME}
     raylib
 )
 
-target_compile_options(${PLUG_NAME} 
-PRIVATE 
-    -Wall 
-    -Werror 
+target_compile_options(${PLUG_NAME}
+PRIVATE
+    -Wall
+    -Werror
     -Wextra
 )
 #----------------------------------------------
@@ -62,10 +62,10 @@ target_link_libraries(${BUILD_NAME}
     raylib
 )
 
-target_compile_options(${BUILD_NAME} 
-PRIVATE 
-    -Wall 
-    -Werror 
+target_compile_options(${BUILD_NAME}
+PRIVATE
+    -Wall
+    -Werror
     -Wextra
 )
 #----------------------------------------------
