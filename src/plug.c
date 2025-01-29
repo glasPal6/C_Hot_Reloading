@@ -34,9 +34,8 @@ void plug_update(void) {
     BeginDrawing();
 
     ClearBackground(p->background);
-    /*DrawText("Hello, World!", 100, 100, 20, WHITE);*/
-    /*DrawText("This is the Hot Reloading plugin working", 100, 150, 15,
-     * WHITE);*/
+    DrawText("Hello, World!", 100, 100, 20, WHITE);
+    DrawText("This is Hot Reloading Working", 100, 150, 15, WHITE);
 
     EndDrawing();
 }

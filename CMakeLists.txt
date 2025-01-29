@@ -39,12 +39,12 @@ PRIVATE
 if (HOTRELOAD_ENABLE)
     add_executable(${BUILD_NAME}
         src/main.c
-        src/hotreload.c
     )
 
     target_compile_definitions(${BUILD_NAME}
     PRIVATE
         HOTRELOAD
+        HOTRELOAD_IMPLEMENTATION
     )
 else()
     add_executable(${BUILD_NAME}
