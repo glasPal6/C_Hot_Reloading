@@ -6,6 +6,8 @@ The purpose of this is to build a basic Hot Reloading example with raylib, but i
 
 Chechout [Hot Reloading in Zig](https://github.com/glasPal6/Zig_Hot_Reloading) for a zig version.
 
+![Showcase](showcase.gif)
+
 ## Build (macOS)
 
 1. Make sure `lib/` folder contains these:
