@@ -35,12 +35,15 @@ PRIVATE
 
 target_include_directories(${PLUG_NAME}
 PRIVATE
-    raylib/include
+    include/
+)
+target_link_libraries(${PLUG_NAME}
 )
 
-target_link_libraries(${PLUG_NAME}
-    raylib
-)
+# macOS: allow unresolved symbols in plugin; resolve from main app
+if(APPLE)
+    target_link_options(${PLUG_NAME} PRIVATE "-Wl,-undefined,dynamic_lookup")
+endif()
 
 target_compile_options(${PLUG_NAME}
 PRIVATE
@@ -76,13 +79,45 @@ endif()
 
 target_include_directories(${BUILD_NAME}
 PRIVATE
-    raylib/include
+    include/
 )
+if(APPLE)
+    target_link_libraries(${BUILD_NAME}
+        plug
+        ${CMAKE_SOURCE_DIR}/lib/libraylib.a
+        ${CMAKE_SOURCE_DIR}/lib/libEGL.dylib
+        ${CMAKE_SOURCE_DIR}/lib/libGLESv2.dylib
+        "-framework CoreVideo"
+        "-framework IOKit"
+        "-framework CoreFoundation"
+        "-framework Cocoa"
+        m
+        pthread
+    )
+elseif(UNIX AND NOT APPLE)
+    target_link_libraries(${BUILD_NAME}
+        plug
+        ${CMAKE_SOURCE_DIR}/lib/libraylib.a
+        ${CMAKE_SOURCE_DIR}/lib/libEGL.so
+        ${CMAKE_SOURCE_DIR}/lib/libGLESv2.so
+        m
+        pthread
+    )
+endif()
 
-target_link_libraries(${BUILD_NAME}
-    plug
-    raylib
-)
+# Copy ANGLE dylibs next to executable (install_name inside dylibs is ./libEGL.dylib)
+if(APPLE)
+    add_custom_command(TARGET ${BUILD_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_SOURCE_DIR}/lib/libEGL.dylib
+            $<TARGET_FILE_DIR:${BUILD_NAME}>/libEGL.dylib
+    )
+    add_custom_command(TARGET ${BUILD_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_SOURCE_DIR}/lib/libGLESv2.dylib
+            $<TARGET_FILE_DIR:${BUILD_NAME}>/libGLESv2.dylib
+    )
+endif()
 
 target_compile_options(${BUILD_NAME}
 PRIVATE

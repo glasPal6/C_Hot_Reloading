@@ -6,7 +6,7 @@
 #include "plug.h"
 
 #ifdef HOTRELOAD
-#define PLUG(func, ...) extern func##_t *func;
+#define PLUG(func, ...) extern func##_t* func;
 LIST_OF_PLUGS
 #undef PLUG
 bool reload_libplug(void);
@@ -29,10 +29,16 @@ LIST_OF_PLUGS
 #include "plug.h"
 #include "raylib.h"
 
-const char *libplug_path = "libplug.so";
-void *libplug = NULL;
+#if defined(__APPLE__)
+const char* libplug_path = "./libplug.dylib";
+#elif defined(__linux__)
+const char* libplug_path = "./libplug.so";
+#else
+const char* libplug_path = "./libplug.so";  // fallback
+#endif
+void* libplug = NULL;
 
-#define PLUG(func, ...) func##_t *func = NULL;
+#define PLUG(func, ...) func##_t* func = NULL;
 LIST_OF_PLUGS
 #undef PLUG
 
@@ -55,11 +61,11 @@ bool reload_libplug(void) {
         return false;
     }
 
-#define PLUG(func, ...)                                                        \
-    func = dlsym(libplug, #func);                                              \
-    if (func == NULL) {                                                        \
-        TraceLog(LOG_ERROR, "%s\n", dlerror());                                \
-        return false;                                                          \
+#define PLUG(func, ...)                         \
+    func = dlsym(libplug, #func);               \
+    if (func == NULL) {                         \
+        TraceLog(LOG_ERROR, "%s\n", dlerror()); \
+        return false;                           \
     }
     LIST_OF_PLUGS
 #undef PLUG

@@ -8,15 +8,14 @@
 int main(void)
 
 {
-    if (!reload_libplug())
-        return 1;
+    if (!reload_libplug()) return 1;
 
     plug_init();
     InitWindow(800, 600, "Hot Reloading");
 
     while (!WindowShouldClose()) {
         if (IsKeyPressed(KEY_R)) {
-            void *state = plug_pre_reload();
+            void* state = plug_pre_reload();
             reload_libplug();
             plug_post_reload(state);
         }
@@ -26,8 +25,7 @@ int main(void)
     CloseWindow();
     plug_destroy();
 
-    if (!unload_libplug())
-        return 1;
+    if (!unload_libplug()) return 1;
 
     return 0;
 }

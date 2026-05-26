@@ -6,26 +6,61 @@ The purpose of this is to build a basic Hot Reloading example with raylib, but i
 
 Chechout [Hot Reloading in Zig](https://github.com/glasPal6/Zig_Hot_Reloading) for a zig version.
 
-## Build
+## Build (macOS)
 
-To initially run `main`, run the following command:
-```
-mkdir build
+1. Make sure `lib/` folder contains these:
+    - libraylib.a
+    - libEGL.so/libEGL.dylib
+    - libGLESv2.so/libGLESv2.dylib
+2. Make sure `include/` has raylib headers (should be copied automatically)
+
+### CMake build
+```sh
+mkdir -p build
 cd build
-cmake -DHOTRELOAD_ENABLE=ON ..
+cmake ..
 make
-./main
 ```
-The option to enable or disable hot reloading is done by passind```-DHOTRELOAD_ENABLE``` flag to the CMake file. 
 
-Once ```main``` is runnig, you can change ```plug.c``` and then run:
+Result:
+- `main` (app)
+- `libplug.dylib` (hotloadable)
+
+### Run
+```sh
+./main/main_cpu
 ```
+
+### Rebuild only the plugin after editing it
+```sh
 make plug
 ```
-which will reload the plugin into the main executable that is running. In this case, ```libplug``` is reloaded by pressing the R key in the main executable.
 
+### If you see errors about *_CFArray* or *OBJC_CLASS_*, you are missing necessary macOS frameworks in the link step.
+Add these to CMakeLists.txt target_link_libraries for both `plug` and `main` targets:
+- CoreVideo
+- IOKit
+- CoreFoundation
+- Cocoa
+
+Example CMake:
+```cmake
+target_link_libraries(plug
+    PRIVATE
+      ${CMAKE_SOURCE_DIR}/lib/libraylib.a
+      ${CMAKE_SOURCE_DIR}/lib/libEGL.dylib
+      ${CMAKE_SOURCE_DIR}/lib/libGLESv2.dylib
+      m pthread
+      -framework CoreVideo
+      -framework IOKit
+      -framework CoreFoundation
+      -framework Cocoa
+)
+```
+
+And similar for `main` target.
 # Basic background theory
 
-In C there are static and dynamic libraries. A static library is a library that is linked into the project and the code is included in the binary. We cannot change something in the binary while it is runnig so we cannot us static libraries for this use case. 
+In C there are static and dynamic libraries. A static library is a library that is linked into the project and the code is included in the binary. We cannot change something in the binary while it is running so we cannot us static libraries for this use case. 
 
 A dynamic library is a library that is linked at runtime and loads the functions into a lookup table that that is used at runtime. All we do is rebuild the table with the updated functions and presto, we have hot reloading.
